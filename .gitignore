@@ -1,0 +1,8 @@
+# output binary
+app_neon_sample
+
+# .o
+/tmp/*
+
+# vscode setting
+.vscode
