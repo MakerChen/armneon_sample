@@ -1,12 +1,12 @@
 TARGET			= app_neon_sample
-INC_DIR			= .
+INC_DIR			= . module
 LIB_DIR			= .
 LIBNAME			= m
 
 NON_ARM_SIMU = 1
 
 ifdef NON_ARM_SIMU
-# NEON_2_SSE.h => https://github.com/intel/ARM_NEON_2_x86_SSE
+# get NEON_2_SSE.h from https://github.com/intel/ARM_NEON_2_x86_SSE
 COMPILER_PREFIX	=
 CFLAGS			= -march=nehalem -mpopcnt -fPIC
 USRDEFS			= -D_INTEL_SIMU_ -DNEON2SSE_DISABLE_PERFORMANCE_WARNING
@@ -16,8 +16,8 @@ CFLAGS			= -mcpu=cortex-a73.cortex-a53 -fno-aggressive-loop-optimizations -fPIC
 endif
 
 CC				= $(COMPILER_PREFIX)gcc
-CINCS			= -I./ -I$(INC_DIR)
-LINCS			= -L./ -L$(LIB_DIR)
+CINCS			= $(foreach incdir, $(INC_DIR), -I$(incdir))
+LINCS			= $(foreach libdir, $(LIB_DIR), -L$(libdir))
 CFLAGS			+= -Wall -O3
 # CFLAGS			+= -pg
 LDFLAGS			= $(foreach libname, $(LIBNAME), -l$(libname))
@@ -25,12 +25,16 @@ USRDEFS			+=
 
 TMP_OBJ_FOLDER	= tmp
 TMP_ASM_FOLDER	= asm
-OBJECTS			= $(patsubst %.c, $(TMP_OBJ_FOLDER)/%.o, $(wildcard *.c))
+OBJECTS			=	$(patsubst %.c, $(TMP_OBJ_FOLDER)/%.o, $(wildcard *.c)) \
+					$(patsubst module/%.c, $(TMP_OBJ_FOLDER)/%.o, $(wildcard module/*.c))
 
 all: $(OBJECTS)
 	@$(CC) $(OBJECTS) $(LINCS) $(LDFLAGS) $(CINCS) $(CFLAGS) $(USRDEFS) -o $(TARGET)
 
 $(TMP_OBJ_FOLDER)/%.o: %.c | $(TMP_OBJ_FOLDER)
+	@$(CC) -c $^ $(LINCS) $(LDFLAGS) $(CINCS) $(CFLAGS) $(USRDEFS) -o $@
+
+$(TMP_OBJ_FOLDER)/%.o: module/%.c | $(TMP_OBJ_FOLDER)
 	@$(CC) -c $^ $(LINCS) $(LDFLAGS) $(CINCS) $(CFLAGS) $(USRDEFS) -o $@
 
 $(TMP_OBJ_FOLDER):

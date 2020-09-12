@@ -1,5 +1,5 @@
-#ifndef __ARM_NEON_SAMPLE__
-#define __ARM_NEON_SAMPLE__
+#ifndef _ARM_NEON_SAMPLE_
+#define _ARM_NEON_SAMPLE_
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,7 +15,7 @@ extern "C" {
 #	include <arm_neon.h>
 #else
 	// https://github.com/intel/ARM_NEON_2_x86_SSE
-#	include "NEON_2_SSE.h"
+#	include "../NEON_2_SSE.h"
 #endif // _INTEL_SIMU_
 
 #include "neon_sample_macro.h"
@@ -327,4 +327,4 @@ void NeonSample_VectorCast_P16_P8();
 }
 #endif // __cplusplus
 
-#endif // __ARM_NEON_SAMPLE__
+#endif // _ARM_NEON_SAMPLE_
