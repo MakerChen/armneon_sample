@@ -407,13 +407,13 @@ void NeonSample_Multiple_S16_S16_S16()
 	vst1_s16(as16DataOutSaturateDoubleMultipleHigh, vs16x4Output);
 
 	// int16x4_t vqrdmulh_s16(int16x4_t a, int16x4_t b);						// VQRDMULH.S16 d0,d0,d0
-	// (2 * a * b) >> 16 + ROUND((2 * a * b) & 0xFFFF)
+	// ROUND((2 * a * b) >> 16)
 	vs16x4Output	= vqrdmulh_s16(vs16x4InputA, vs16x4InputB);
 	vst1_s16(as16DataOutSaturateRoundDoubleMultipleHigh, vs16x4Output);
 
-	printf("== Multiple s16 = s16 * s16 (vqdmulh_s16 / vqrdmulh_s16)                  ==\n");
-	printf("=> vqdmulh_s16  : (2 * s16 * s16) >> 16                                   ==\n");
-	printf("=> vqrdmulh_s16 : (2 * s16 * s16) >> 16 + ROUND((2 * s16 * s16) & 0xFFFF) ==\n");
+	printf("== Multiple s16 = s16 * s16 (vqdmulh_s16 / vqrdmulh_s16) ==\n");
+	printf("=> vqdmulh_s16  : s16 = (2 * s16 * s16) >> 16            ==\n");
+	printf("=> vqrdmulh_s16 : s16 = ROUND((2 * s16 * s16) >> 16)     ==\n");
 	for (u32Idx = 0; u32Idx < 4; ++u32Idx)
 	{
 		printf("2 * %6d * %6d = %6d, %6d\n",
@@ -451,18 +451,18 @@ void NeonSample_Multiple_S32_S32_S16_S16()
 	vs16x4InputC	= vld1_s16(as16DataInC);
 
 	// int32x4_t vqdmlal_s16(int32x4_t a, int16x4_t b, int16x4_t c);			// VQDMLAL.S16 q0,d0,d0
-	// SATURATE(a + (2 * b * c))
+	// (a + (2 * b * c)) > MAX ? MAX : (a + (2 * b * c))
 	vs32x4Output	= vqdmlal_s16(vs32x4InputA, vs16x4InputB, vs16x4InputC);
 	vst1q_s32(as32DataOutSaturateDoubleMultipleAddLong, vs32x4Output);
 
 	// int32x4_t vqdmlsl_s16(int32x4_t a, int16x4_t b, int16x4_t c);			// VQDMLSL.S16 q0,d0,d0
-	// SATURATE(a - (2 * b * c))
+	// (a - (2 * b * c)) > MAX ? MAX : (a - (2 * b * c))
 	vs32x4Output	= vqdmlsl_s16(vs32x4InputA, vs16x4InputB, vs16x4InputC);
 	vst1q_s32(as32DataOutSaturateDoubleMultipleSubLong, vs32x4Output);
 
-	printf("== Multiple s32 = s32 +- s16 * s16 (vqdmlal_s16 / vqdmlsl_s16) ==\n");
-	printf("=> vqdmlal_s16 : s32 = s32 + (2 * s16 * s16)                   ==\n");
-	printf("=> vqdmlsl_s16 : s32 = s32 - (2 * s16 * s16)                   ==\n");
+	printf("== Multiple s32 = SATURATION(s32 +- s16 * s16) (vqdmlal_s16 / vqdmlsl_s16) ==\n");
+	printf("=> vqdmlal_s16 : s32 = SATURATE(s32 + (2 * s16 * s16))                     ==\n");
+	printf("=> vqdmlsl_s16 : s32 = SATURATE(s32 - (2 * s16 * s16))                     ==\n");
 	for (u32Idx = 0; u32Idx < 4; ++u32Idx)
 	{
 		printf("%11d +/- (2 * %6d * %6d) = %11d, %11d\n",
@@ -500,7 +500,7 @@ void NeonSample_Multiple_S32_S16_S16()
 	vs32x4Output	= vqdmull_s16(vs16x4InputA, vs16x4InputB);
 	vst1q_s32(as32DataOut, vs32x4Output);
 
-	printf("== Multiple s32 = 2 * s16 * s16 (vqdmull_s16) ==\n");
+	printf("== Multiple s32 = SATURATE(2 * s16 * s16) (vqdmull_s16) ==\n");
 	for (u32Idx = 0; u32Idx < 4; ++u32Idx)
 	{
 		printf("2 * %6d * %6d = %11d\n",

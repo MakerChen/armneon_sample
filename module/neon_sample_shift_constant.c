@@ -40,7 +40,7 @@ void NeonSample_ShiftConstant_U8_U8_SU8()
 	vst1_u8(au8DataOutRight, vu8x8Output);
 
 	// uint8x8_t vrshr_n_u8(uint8x8_t a, __constrange(1,8) int b);				// VRSHR.U8 d0,d0,#8
-	// ROUND(a >> b), (1 ~ 8)
+	// (a + 2^(b-1)) >> b), (1 ~ 8)
 	vu8x8Output		= vrshr_n_u8(vu8x8InputA, u8CoefShiftRight);
 	vst1_u8(au8DataOutRightRound, vu8x8Output);
 
@@ -170,14 +170,14 @@ void NeonSample_ShiftConstant_U8_S8_SU8()
 	uint32_t	u32Idx;
 
 	// initial
-	as8DataIn[0] = 0;
-	as8DataIn[1] = 64;
-	as8DataIn[2] = 65;
-	as8DataIn[3] = 127;
-	as8DataIn[4] = 128;
-	as8DataIn[5] = -63;
-	as8DataIn[6] = -64;
-	as8DataIn[7] = -65;
+	as8DataIn[0] = 2;
+	as8DataIn[1] = 10;
+	as8DataIn[2] = 20;
+	as8DataIn[3] = 40;
+	as8DataIn[4] = 50;
+	as8DataIn[5] = -10;
+	as8DataIn[6] = -20;
+	as8DataIn[7] = -30;
 
 	u8CoefShift		= 4;
 
@@ -509,13 +509,13 @@ void NeonSample_ShiftConstant_U8_U8_U8_SU8()
 	vst1_u8(au8DataOutAdd, vu8x8Output);
 
 	// uint8x8_t vrsra_n_u8(uint8x8_t a, uint8x8_t b, __constrange(1,8) int c);	// VRSRA.U8 d0,d0,#8
-	// ROUND(a + (b >> c)), (1 ~ 8)
+	// a + ((b + 2^(c-1)) >> c), (1 ~ 8)
 	vu8x8Output		= vrsra_n_u8(vu8x8InputA, vu8x8InputB, u8CoefShift);
 	vst1_u8(au8DataOutRoundAdd, vu8x8Output);
 
 	printf("== Shift u8 = u8 + (u8 >> u8) (vsra_n_u8 / vrsra_n_u8) ==\n");
 	printf("=> vsra_n_u8  : u8 = u8 + (u8 >> u8)                   ==\n");
-	printf("=> vrsra_n_u8 : u8 = ROUND(u8 + (u8 >> u8))            ==\n");
+	printf("=> vrsra_n_u8 : u8 = u8 + ROUND(u8 >> u8)              ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%3d + (%3d >> %1d) = %3d, %3d\n",

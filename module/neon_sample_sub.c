@@ -41,14 +41,14 @@ void NeonSample_Sub_U8_U8_U8()
 	vst1_u8(au8DataOutSaturate, vu8x8Output);
 
 	// uint8x8_t vhsub_u8(uint8x8_t a, uint8x8_t b);							// VHSUB.U8 d0,d0,d0
-	// (a - b) / 2
+	// (a - b) >> 1
 	vu8x8Output		= vhsub_u8(vu8x8InputA, vu8x8InputB);
 	vst1_u8(au8DataOutHalf, vu8x8Output);
 
 	printf("== Sub u8 = u8 - u8 (vsub_u8 / vqsub_u8 / vhsub_u8) ==\n");
 	printf("=> vsub_u8  : u8 = u8 - u8                          ==\n");
 	printf("=> vqsub_u8 : u8 = SATURATE(u8 - u8)                ==\n");
-	printf("=> vhsub_u8 : u8 = (u8 - u8) / 2                    ==\n");
+	printf("=> vhsub_u8 : u8 = (u8 - u8) >> 1                   ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%3d - %3d = %3d, %3d, %3d\n",
@@ -81,7 +81,7 @@ void NeonSample_Sub_S8_S8_S8()
 	as8DataInA[2] = -120;	as8DataInB[2] = -127;
 	as8DataInA[3] = -120;	as8DataInB[3] = 126;
 	as8DataInA[4] = -120;	as8DataInB[4] = -126;
-	as8DataInA[5] = 0;		as8DataInB[5] = 100;
+	as8DataInA[5] = 125;	as8DataInB[5] = -126;
 	as8DataInA[6] = 0;		as8DataInB[6] = -100;
 	as8DataInA[7] = 120;	as8DataInB[7] = 120;
 
@@ -99,14 +99,14 @@ void NeonSample_Sub_S8_S8_S8()
 	vst1_s8(as8DataOutSaturate, vs8x8Output);
 
 	// int8x8_t vhsub_s8(int8x8_t a, int8x8_t b);								// VHSUB.S8 d0,d0,d0
-	// (a - b) / 2
+	// (a - b) >> 1
 	vs8x8Output		= vhsub_s8(vs8x8InputA, vs8x8InputB);
 	vst1_s8(as8DataOutHalf, vs8x8Output);
 
 	printf("== Sub s8 = s8 - s8 (vsub_s8 / vqsub_s8 / vhsub_s8) ==\n");
 	printf("=> vsub_s8  : s8 = s8 - s8                          ==\n");
 	printf("=> vqsub_s8 : s8 = SATURATE(s8 - s8)                ==\n");
-	printf("=> vhsub_s8 : s8 = (s8 - s8) / 2                    ==\n");
+	printf("=> vhsub_s8 : s8 = (s8 - s8) >> 1                   ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%4d - %4d = %4d, %4d, %4d\n",
@@ -350,13 +350,13 @@ void NeonSample_Sub_U8_U16_U16()
 	vst1_u8(au8DataOutSubHighHalf, vu8x8Output);
 
 	// uint8x8_t vrsubhn_u16(uint16x8_t a, uint16x8_t b);						// VRSUBHN.I16 d0,q0,q0
-	// (ROUND(a - b)) >> 8)
+	// ROUND((a - b) >> 8)
 	vu8x8Output		= vrsubhn_u16(vu16x8InputA, vu16x8InputB);
 	vst1_u8(au8DataOutRoundSubHighHalf, vu8x8Output);
 
 	printf("== Sub u8 = u16 - u16 (vsubhn_u16 / vrsubhn_u16) ==\n");
 	printf("=> vsubhn_u16  : u8 = (u16 - u16) >> 8           ==\n");
-	printf("=> vrsubhn_u16 : u8 = (ROUND(u16 - u16)) >> 8    ==\n");
+	printf("=> vrsubhn_u16 : u8 = ROUND((u16 - u16) >> 8)    ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%5d - %5d = %3d, %3d\n",
@@ -400,13 +400,13 @@ void NeonSample_Sub_S8_S16_S16()
 	vst1_s8(as8DataOutSubHighHalf, vs8x8Output);
 
 	// int8x8_t vrsubhn_s16(int16x8_t a, int16x8_t b);							// VRSUBHN.I16 d0,q0,q0
-	// (ROUND(a - b)) >> 8
+	// ROUND((a - b) >> 8)
 	vs8x8Output		= vrsubhn_s16(vs16x8InputA, vs16x8InputB);
 	vst1_s8(as8DataOutRoundSubHighHalf, vs8x8Output);
 
 	printf("== Sub s8 = s16 - s16 (vsubhn_s16 / vrsubhn_s16) ==\n");
 	printf("=> vsubhn_s16  : s8 = (s16 - s16) >> 8           ==\n");
-	printf("=> vrsubhn_s16 : s8 = (ROUND(s16 - s16)) >> 8)   ==\n");
+	printf("=> vrsubhn_s16 : s8 = ROUND((s16 - s16) >> 8)    ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%6d - %6d = %4d, %4d\n",

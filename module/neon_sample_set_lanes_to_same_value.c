@@ -22,7 +22,7 @@ void NeonSample_SetLanesToValue_U8_SU8()
 	vst1_u8(au8DataOutDup, vu8x8Output);
 
 	// uint8x8_t vmov_n_u8(uint8_t value);										// VDUP.8 d0,r0
-	vu8x8Output		= vdup_n_u8(u8CoefValue);
+	vu8x8Output		= vmov_n_u8(u8CoefValue);
 	vst1_u8(au8DataOutMov, vu8x8Output);
 
 	printf("== Set Lanes With Value u8 = su8 (vdup_n_u8 / vmov_n_u8) ==\n");

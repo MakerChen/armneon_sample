@@ -66,6 +66,7 @@ void NeonSample_Sub_S8_S16_S16();
 // -----------------------------------------------------------------------------
 void NeonSample_Compare_U8_U8_U8();
 void NeonSample_Compare_U8_S8_S8();
+void NeonSample_Compare_U32_F32_F32();
 
 // -----------------------------------------------------------------------------
 void NeonSample_AbsDiff_U8_U8_U8();

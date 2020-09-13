@@ -37,24 +37,24 @@ void NeonSample_Add_U8_U8_U8()
 	vst1_u8(au8DataOut, vu8x8Output);
 
 	// uint8x8_t vhadd_u8(uint8x8_t a, uint8x8_t b);							// VHADD.U8 d0,d0,d0
-	// (a + b) / 2
+	// (a + b) >> 1
 	vu8x8Output		= vhadd_u8(vu8x8InputA, vu8x8InputB);
 	vst1_u8(au8DataOutHalf, vu8x8Output);
 
 	// uint8x8_t vrhadd_u8(uint8x8_t a, uint8x8_t b);							// VRHADD.U8 d0,d0,d0
-	// ROUND((a + b) / 2)
+	// (a + b + 1) >> 1
 	vu8x8Output		= vrhadd_u8(vu8x8InputA, vu8x8InputB);
 	vst1_u8(au8DataOutRoundHalf, vu8x8Output);
 
 	// uint8x8_t vqadd_u8(uint8x8_t a, uint8x8_t b);							// VQADD.U8 d0,d0,d0
-	// SATURATE(a + b)
+	// (a + b) > MAX ? MAX : (a + b)
 	vu8x8Output		= vqadd_u8(vu8x8InputA, vu8x8InputB);
 	vst1_u8(au8DataOutSaturate, vu8x8Output);
 
 	printf("== Add u8 = u8 + u8 (vadd_u8 / vhadd_u8 / vrhadd_u8 / vqadd_u8) ==\n");
 	printf("=> vadd_u8   : u8 = u8 + u8                                     ==\n");
-	printf("=> vhadd_u8  : u8 = (u8 + u8) / 2                               ==\n");
-	printf("=> vrhadd_u8 : u8 = ROUND((u8 + u8) / 2)                        ==\n");
+	printf("=> vhadd_u8  : u8 = (u8 + u8) >> 1                              ==\n");
+	printf("=> vrhadd_u8 : u8 = (u8 + u8 + 1) >> 1                          ==\n");
 	printf("=> vqadd_u8  : u8 = SATURATE(u8 + u8)                           ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
@@ -140,24 +140,24 @@ void NeonSample_Add_U16_U16_U16()
 	vst1_u16(au16DataOut, vu16x4Output);
 
 	// uint16x4_t vhadd_u16(uint16x4_t a, uint16x4_t b);						// VHADD.U16 d0,d0,d0
-	// (a + b) / 2
+	// (a + b) >> 1
 	vu16x4Output	= vhadd_u16(vu16x4InputA, vu16x4InputB);
 	vst1_u16(au16DataOutHalf, vu16x4Output);
 
 	// uint16x4_t vrhadd_u16(uint16x4_t a, uint16x4_t b);						// VRHADD.U16 d0,d0,d0
-	// ROUND((a + b) / 2)
+	// (a + b + 1) >> 1
 	vu16x4Output	= vrhadd_u16(vu16x4InputA, vu16x4InputB);
 	vst1_u16(au16DataOutRoundHalf, vu16x4Output);
 
 	// uint16x4_t vqadd_u16(uint16x4_t a, uint16x4_t b);						// VQADD.U16 d0,d0,d0
-	// SATURATE(a + b)
+	// (a + b) > MAX ? MAX : (a + b)
 	vu16x4Output	= vqadd_u16(vu16x4InputA, vu16x4InputB);
 	vst1_u16(au16DataOutSaturate, vu16x4Output);
 
 	printf("== Add u16 = u16 + u16 (vadd_u16 / vhadd_u16 / vrhadd_u16 / vqadd_u16) ==\n");
 	printf("=> vadd_u16   : u16 = u16 + u16                                        ==\n");
-	printf("=> vhadd_u16  : u16 = (u16 + u16) / 2                                  ==\n");
-	printf("=> vrhadd_u16 : u16 = ROUND((u16 + u16) / 2)                           ==\n");
+	printf("=> vhadd_u16  : u16 = (u16 + u16) >> 1                                 ==\n");
+	printf("=> vrhadd_u16 : u16 = (u16 + u16 + 1) >> 1                             ==\n");
 	printf("=> vqadd_u16  : u16 = SATURATE(u16 + u16)                              ==\n");
 	for (u32Idx = 0; u32Idx < 4; ++u32Idx)
 	{
@@ -243,24 +243,24 @@ void NeonSample_Add_S8_S8_S8()
 	vst1_s8(as8DataOut, vs8x8Output);
 
 	// int8x8_t vhadd_s8(int8x8_t a, int8x8_t b);								// VHADD.S8 d0,d0,d0
-	// (a + b) / 2
+	// (a + b) >> 1
 	vs8x8Output		= vhadd_s8(vs8x8InputA, vs8x8InputB);
 	vst1_s8(as8DataOutHalf, vs8x8Output);
 
 	// int8x8_t vrhadd_s8(int8x8_t a, int8x8_t b);								// VRHADD.S8 d0,d0,d0
-	// ROUND((a + b) / 2)
+	// (a + b + 1) >> 1
 	vs8x8Output		= vrhadd_s8(vs8x8InputA, vs8x8InputB);
 	vst1_s8(as8DataOutRoundHalf, vs8x8Output);
 
 	// int8x8_t vqadd_s8(int8x8_t a, int8x8_t b);								// VQADD.S8 d0,d0,d0
-	// SATURATE(a + b)
+	// (a + b) > MAX ? MAX : (a + b)
 	vs8x8Output		= vqadd_s8(vs8x8InputA, vs8x8InputB);
 	vst1_s8(as8DataOutSaturate, vs8x8Output);
 
 	printf("== Add s8 = s8 + s8 (vadd_s8 / vhadd_s8 / vrhadd_s8 / vqadd_s8) ==\n");
 	printf("=> vadd_s8   : s8 = s8 + s8                                     ==\n");
-	printf("=> vhadd_s8  : s8 = (s8 + s8) / 2                               ==\n");
-	printf("=> vrhadd_s8 : s8 = ROUND((s8 + s8) / 2)                        ==\n");
+	printf("=> vhadd_s8  : s8 = (s8 + s8) >> 1                              ==\n");
+	printf("=> vrhadd_s8 : s8 = (s8 + s8 + 1) >> 1                          ==\n");
 	printf("=> vqadd_s8  : s8 = SATURATE(s8 + s8)                           ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
@@ -346,24 +346,24 @@ void NeonSample_Add_S16_S16_S16()
 	vst1_s16(as16DataOut, vs16x4Output);
 
 	// int16x4_t vhadd_s16(int16x4_t a, int16x4_t b);							// VHADD.S16 d0,d0,d0
-	// (a + b) / 2
+	// (a + b) >> 1
 	vs16x4Output	= vhadd_s16(vs16x4InputA, vs16x4InputB);
 	vst1_s16(as16DataOutHalf, vs16x4Output);
 
 	// int16x4_t vrhadd_s16(int16x4_t a, int16x4_t b);							// VRHADD.S16 d0,d0,d0
-	// ROUND((a + b) / 2)
+	// (a + b + 1) >> 1
 	vs16x4Output	= vrhadd_s16(vs16x4InputA, vs16x4InputB);
 	vst1_s16(as16DataOutRoundHalf, vs16x4Output);
 
 	// int16x4_t vqadd_s16(int16x4_t a, int16x4_t b);							// VQADD.S16 d0,d0,d0
-	// SATURATE(a + b)
+	// (a + b) > MAX ? MAX : (a + b)
 	vs16x4Output	= vqadd_s16(vs16x4InputA, vs16x4InputB);
 	vst1_s16(as16DataOutSaturate, vs16x4Output);
 
 	printf("== Add s16 = s16 + s16 (vadd_s16 / vhadd_s16 / vrhadd_s16 / vqadd_s16) ==\n");
 	printf("=> vadd_s16   : s16 = s16 + s16                                        ==\n");
-	printf("=> vhadd_s16  : s16 = (s16 + s16) / 2                                  ==\n");
-	printf("=> vrhadd_s16 : s16 = ROUND((s16 + s16) / 2)                           ==\n");
+	printf("=> vhadd_s16  : s16 = (s16 + s16) >> 1                                 ==\n");
+	printf("=> vrhadd_s16 : s16 = (s16 + s16 + 1) >> 1                             ==\n");
 	printf("=> vqadd_s16  : s16 = SATURATE(s16 + s16)                              ==\n");
 	for (u32Idx = 0; u32Idx < 4; ++u32Idx)
 	{
@@ -482,13 +482,13 @@ void NeonSample_Add_U8_U16_U16()
 	vst1_u8(au8DataOutHighHalf, vu8x8Output);
 
 	// uint8x8_t vraddhn_u16(uint16x8_t a, uint16x8_t b);						// VRADDHN.I16 d0,q0,q0
-	// (ROUND(a + b)) >> 8
+	// ROUND((a + b) >> 8)
 	vu8x8Output	= vraddhn_u16(vu16x8InputA, vu16x8InputB);
 	vst1_u8(au8DataOutRoundHighHalf, vu8x8Output);
 
 	printf("== Add u8 = u16 + u16 (vaddhn_u16 / vraddhn_u16) ==\n");
 	printf("=> vaddhn_u16  : u8 = (u16 + u16) >> 8           ==\n");
-	printf("=> vraddhn_u16 : u8 = (ROUND(u16 + u16)) >> 8    ==\n");
+	printf("=> vraddhn_u16 : u8 = ROUND((u16 + u16) >> 8)    ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%5d + %5d = %3d, %3d\n",
@@ -532,13 +532,13 @@ void NeonSample_Add_S8_S16_S16()
 	vst1_s8(as8DataOutHighHalf, vs8x8Output);
 
 	// int8x8_t vraddhn_s16(int16x8_t a, int16x8_t b);							// VRADDHN.I16 d0,q0,q0
-	// (ROUND(a + b)) >> 8
+	// ROUND((a + b) >> 8)
 	vs8x8Output	= vraddhn_s16(vs16x8InputA, vs16x8InputB);
 	vst1_s8(as8DataOutRoundHighHalf, vs8x8Output);
 
 	printf("== Add s8 = s16 + s16 (vaddhn_s16 / vraddhn_s16) ==\n");
 	printf("=> vaddhn_s16  : s8 = (s16 + s16) >> 8           ==\n");
-	printf("=> vraddhn_s16 : s8 = (ROUND(s16 + s16)) >> 8    ==\n");
+	printf("=> vraddhn_s16 : s8 = ROUND((s16 + s16) >> 8)    ==\n");
 	for (u32Idx = 0; u32Idx < 8; ++u32Idx)
 	{
 		printf("%6d + %6d = %4d, %4d\n",
